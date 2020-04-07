@@ -5,41 +5,41 @@ import { Tracker } from "meteor/tracker";
 
 import { Players } from "./../imports/api/players";
 
-Tracker.autorun(() => {
-  console.log(Players.find().fetch());
-});
-const App = () => {
-  const players = [
-    {
-      _id: 1,
-      name: "Lauran",
-      score: 99,
-    },
-    {
-      _id: 2,
-      name: "Steve",
-      score: -1,
-    },
-    {
-      _id: 3,
-      name: "Blue",
-      score: 12,
-    },
-  ];
+const App = (props) => {
   const title = "Score keep";
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let name = e.target.playerName.value;
+
+    if (name) {
+      Players.insert({
+        name: e.target.playerName.value,
+        score: 0,
+      });
+    }
+  };
+
   return (
     <>
       <h1>{title}</h1>
-      {players.map((player) => (
+      {props.players.map((player) => (
         <p key={player._id}>
           Player {player.name} has {player.score} point(s)
         </p>
       ))}
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="playerName" placeholder="John" />
+        <button>Add player</button>
+      </form>
     </>
   );
 };
 
 Meteor.startup(function () {
-  let jsx = <h1>This is a heading</h1>;
-  ReactDom.render(<App />, document.getElementById("app"));
+  var players = [];
+  Tracker.autorun(() => {
+    players = Players.find().fetch();
+    ReactDom.render(<App players={players} />, document.getElementById("app"));
+  });
 });
