@@ -3,7 +3,34 @@ import ReactDom from "react-dom";
 import { Meteor } from "meteor/meteor";
 
 const App = () => {
-  return <h1>this is the new heading</h1>;
+  const players = [
+    {
+      _id: 1,
+      name: "Lauran",
+      score: 99,
+    },
+    {
+      _id: 2,
+      name: "Steve",
+      score: -1,
+    },
+    {
+      _id: 3,
+      name: "Blue",
+      score: 12,
+    },
+  ];
+  const title = "Score keep";
+  return (
+    <>
+      <h1>{title}</h1>
+      {players.map((player) => (
+        <p key={player._id}>
+          Player {player.name} has {player.score} point(s)
+        </p>
+      ))}
+    </>
+  );
 };
 
 Meteor.startup(function () {
