@@ -20,13 +20,47 @@ const App = (props) => {
     }
   };
 
+  const removePlayer = (_id) => {
+    console.log(_id);
+    Players.remove({ _id });
+  };
+
+  const incrementScore = (_id) => {
+    Players.update({ _id }, { $inc: { score: 1 } });
+  };
+  const decrementScore = (_id) => {
+    Players.update({ _id }, { $inc: { score: -1 } });
+  };
   return (
     <>
       <h1>{title}</h1>
       {props.players.map((player) => (
-        <p key={player._id}>
-          Player {player.name} has {player.score} point(s)
-        </p>
+        <>
+          <p key={player._id}>
+            Player {player.name} has {player.score} point(s)
+            <button
+              onClick={() => {
+                incrementScore(player._id);
+              }}
+            >
+              +
+            </button>
+            <button
+              onClick={() => {
+                decrementScore(player._id);
+              }}
+            >
+              -
+            </button>
+            <button
+              onClick={() => {
+                removePlayer(player._id);
+              }}
+            >
+              Remove Player
+            </button>
+          </p>
+        </>
       ))}
       <form onSubmit={handleSubmit}>
         <input type="text" name="playerName" placeholder="John" />
