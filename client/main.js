@@ -73,7 +73,7 @@ const App = (props) => {
 Meteor.startup(function () {
   var players = [];
   Tracker.autorun(() => {
-    players = Players.find().fetch();
+    players = Players.find({}, { sort: { score: 1 } }).fetch();
     ReactDom.render(<App players={players} />, document.getElementById("app"));
   });
 });
