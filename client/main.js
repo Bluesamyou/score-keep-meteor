@@ -2,7 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 import { Meteor } from "meteor/meteor";
 import { Tracker } from "meteor/tracker";
-
+import Form from "./src/Form";
 import { Players } from "./../imports/api/players";
 
 const App = (props) => {
@@ -66,6 +66,8 @@ const App = (props) => {
         <input type="text" name="playerName" placeholder="John" />
         <button>Add player</button>
       </form>
+
+      <Form />
     </>
   );
 };
